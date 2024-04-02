@@ -40,6 +40,7 @@ class Model_training:
 
     def save_model(self):
         joblib.dump(self.model, self.model_path)
+        logger.info("model saved successfully")
 
     def main(self):
         self.training()
