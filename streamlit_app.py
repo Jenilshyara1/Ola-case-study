@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 import json
-st.title("Streamlit App")
+st.title("Ola churn prediction")
 Education_Level = st.selectbox(
     "Education Level", ("0", "1", "2"), placeholder="Select Education Level..."
 )
@@ -52,7 +52,11 @@ if st.button("Submit"):
         "Age_cat": Age_cat,
         "joining_year": joining_year,
     }
-    response = requests.post('http://127.0.0.1:8000/prediction',json=data).json()
+    response = requests.post('http://api-app:5858/prediction',json=data).json()
     res = json.loads(response)
-    st.write("output:", (res['output']))
-    st.write("output_proba:", (res['output_proba']))
+    if res['output']=="1":    
+        st.write("Driver will leave the company")
+        st.write(f"probabilty is {res['output_proba']}")
+    else:
+        st.write("Driver will stay in the company")
+        st.write(f"probabilty is {res['output_proba']}")

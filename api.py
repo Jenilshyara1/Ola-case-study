@@ -44,8 +44,8 @@ async def create_item(data: Data):
     }
     x = pd.DataFrame(x, index=[0])
     output, output_proba = model.predict(x)
-    print(output, output_proba)
-    result = {"output": str(output[0]), "output_proba": str(output_proba[0][1])}
+    print(output[0], output_proba[0][1])
+    result = {"output": str(output[0]), "output_proba": str(max(list(output_proba[0])))}
     return JSONResponse(content=json.dumps(result))
 
 

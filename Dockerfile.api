@@ -1,0 +1,5 @@
+FROM python:3.11.6-slim-bullseye
+RUN apt-get update
+COPY requirements_api.txt requirements_api.txt
+RUN pip install -r requirements_api.txt
+# RUN gunicorn --bind 0.0.0.0:5000 wsgi:app
