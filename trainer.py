@@ -1,8 +1,8 @@
-from src.setup_logger import init_logger
+from src.churn.setup_logger import init_logger
 import logging
-from src.stage01_data_preprocessing import Data_preparation_model
-from src.stage02_model_training import Model_training
-from src.stage03_model_evaluation import Model_evaluation
+from src.churn.stage01_data_preprocessing import Data_preparation_model
+from src.churn.stage02_model_training import Model_training
+from src.churn.stage03_model_evaluation import Model_evaluation
 from config import Config
 
 logger = logging.getLogger()

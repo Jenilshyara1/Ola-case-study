@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from src.prediction import Model
+from src.churn.prediction import Model
 from config import Config
 import pandas as pd
 import json
