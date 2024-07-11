@@ -3,7 +3,7 @@ import pandas as pd
 from src.churn.prediction import Model
 from config import Config
 def test_model_load():
-    model = Model(r'models\model.joblib')
+    model = Model(r'models/model.joblib')
 
 def test_model_predict():
     data = {
