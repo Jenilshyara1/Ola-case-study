@@ -1,9 +1,9 @@
 import pytest
 import pandas as pd
-from src.churn.stage01_data_preprocessing import Data_preprocessing, Data_preparation_model
+from src.churn.stage01_data_preprocessing import DataPreprocessing, DataPreparationModel
 
 def test_Data_preprocessing():
-    data = Data_preprocessing(data_path="data/Ola.csv")
+    data = DataPreprocessing(data_path="data/Ola.csv")
     
     data.preprocessing()
     assert isinstance(data.df, pd.DataFrame), "data.df should be a DataFrame"
@@ -13,7 +13,7 @@ def test_Data_preprocessing():
     assert "joining_year" in data.df.columns, "joining_year column should be in the DataFrame"
 
 def test_Data_preparation_model():
-    data = Data_preparation_model(data_path="data/Ola.csv")
+    data = DataPreparationModel(data_path="data/Ola.csv")
     X_train, X_test, y_train, y_test = data.split_data()
     assert isinstance(X_train, pd.DataFrame), "X_train should be a DataFrame"
     assert isinstance(X_test, pd.DataFrame), "X_test should be a DataFrame"
