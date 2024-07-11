@@ -24,4 +24,4 @@ jobs:
           pip install -r requirements_api.txt
 
       - name: RUN TEST WITH PYTEST
-        run: pytest
+        run: pytest -W ignore
