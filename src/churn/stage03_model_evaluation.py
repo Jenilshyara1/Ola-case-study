@@ -9,7 +9,7 @@ logger = logging.getLogger()
 STAGE_NAME = "Model evaluation"
 
 
-class Model_evaluation:
+class ModelEvaluation:
     def __init__(
         self,
         model,

@@ -1,43 +1,43 @@
-from src.churn.setup_logger import init_logger
+from setup_logger import init_logger
 import logging
-from src.churn.stage01_data_preprocessing import Data_preparation_model
-from src.churn.stage02_model_training import Model_training
-from src.churn.stage03_model_evaluation import Model_evaluation
+from src.churn.stage01_data_preprocessing import DataPreparationModel
+from src.churn.stage02_model_training import ModelTraining
+from src.churn.stage03_model_evaluation import ModelEvaluation
 from config import Config
 
-logger = logging.getLogger()
+# Initialize the logger
 init_logger()
-STAGE_NAME = "Data Preprocessing"
+logger = logging.getLogger()
 
-try:
-    logger.info(f"****************")
-    logger.info(f">>>>> stage {STAGE_NAME} started <<<<<<<<<<<<")
-    obj = Data_preparation_model(data_path=Config.DATA_PATH)
+
+def run_stage(stage_name, stage_func):
+    """Runs a stage and logs the start and end, as well as any errors."""
+    try:
+        logger.info("****************")
+        logger.info(f">>>>> Stage {stage_name} started <<<<<<<<<<<<")
+        stage_func()
+        logger.info(f">>>>>>>>>> Stage {stage_name} completed <<<<<<<<<<<<")
+    except Exception as e:
+        logger.error(f'Error occurred while running "{stage_name}"', exc_info=True)
+        raise
+
+
+def data_preprocessing_stage():
+    obj = DataPreparationModel(data_path=Config.DATA_PATH)
+    global X_train, X_test, y_train, y_test
     X_train, X_test, y_train, y_test = obj.split_data()
-    print(X_train.shape)
-    print(X_test.shape)
-    logger.info(f">>>>>>>>>> stage {STAGE_NAME} completed<<<<<<")
-except Exception as e:
-    logger.error(f'error occurred while running "{STAGE_NAME}"', exc_info=True)
+    logger.debug(f"X_train shape: {X_train.shape}, X_test shape: {X_test.shape}")
 
-STAGE_NAME = "Model Training"
 
-try:
-    logger.info(f"****************")
-    logger.info(f">>>>> stage {STAGE_NAME} started <<<<<<<<<<<<")
-    obj = Model_training(X_train, y_train, Config.MODEL_PATH)
+def model_training_stage():
+    obj = ModelTraining(X_train, y_train, Config.MODEL_PATH)
     obj.main()
+    global model
     model = obj.model
-    logger.info(f">>>>>>>>>> stage {STAGE_NAME} completed<<<<<<")
-except Exception as e:
-    logger.error(f'error occurred while running "{STAGE_NAME}"', exc_info=True)
 
-STAGE_NAME = "Model evaluation"
 
-try:
-    logger.info(f"****************")
-    logger.info(f">>>>> stage {STAGE_NAME} started <<<<<<<<<<<<")
-    obj = Model_evaluation(
+def model_evaluation_stage():
+    obj = ModelEvaluation(
         model,
         X_test,
         y_test,
@@ -47,6 +47,9 @@ try:
         Config.ROC_AUC_CURVE_PATH,
     )
     obj.evaluate()
-    logger.info(f">>>>>>>>>> stage {STAGE_NAME} completed<<<<<<")
-except Exception as e:
-    logger.error(f'error occurred while running "{STAGE_NAME}"', exc_info=True)
+
+
+if __name__ == "__main__":
+    run_stage("Data Preprocessing", data_preprocessing_stage)
+    run_stage("Model Training", model_training_stage)
+    run_stage("Model Evaluation", model_evaluation_stage)

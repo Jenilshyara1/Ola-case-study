@@ -11,7 +11,7 @@ logger = logging.getLogger()
 STAGE_NAME = "Model Training"
 
 
-class Model_training:
+class ModelTraining:
     def __init__(self, X_train, y_train, model_path) -> None:
         self.X_train = X_train
         self.y_train = y_train

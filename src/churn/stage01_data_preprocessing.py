@@ -7,7 +7,7 @@ logger = logging.getLogger()
 STAGE_NAME = "Data Preprocessing"
 
 
-class Data_preprocessing:
+class DataPreprocessing:
     def __init__(self, data_path) -> None:
         self.df = pd.read_csv(data_path)
 
@@ -76,7 +76,7 @@ class Data_preprocessing:
         print(self.df)
 
 
-class Data_preparation_model(Data_preprocessing):
+class DataPreparationModel(DataPreprocessing):
     def __init__(self, data_path) -> None:
         super().__init__(data_path)
         super().main()
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     try:
         logger.info(f"****************")
         logger.info(f">>>>> stage {STAGE_NAME} started <<<<<<<<<<<<")
-        obj = Data_preparation_model()
+        obj = DataPreparationModel()
         X_train, X_test, y_train, y_test = obj.split_data()
         print(X_train.shape)
         print(X_test.shape)
