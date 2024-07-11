@@ -21,6 +21,6 @@ def test_model_predict():
         "joining_year": 2020,
     }
     x = pd.DataFrame(data, index=[0])
-    model = Model(r'models\model.joblib')
+    model = Model(r'models/model.joblib')
     pred = model.predict(x)
     assert len(pred)==2
